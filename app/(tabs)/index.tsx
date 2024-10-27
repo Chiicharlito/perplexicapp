@@ -5,27 +5,19 @@ import {
   TouchableOpacity,
   useColorScheme,
   TextInput,
+  Share,
+  Alert,
 } from "react-native";
 import { Share2, Plus, Mic } from "lucide-react-native";
-import { useNavigation, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Colors } from "@/constants/Colors";
 
 const HomeScreen = () => {
   const [query, setQuery] = useState<string>("");
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const router = useRouter();
-
-  // Thème personnalisé
-  const theme = {
-    colors: {
-      background: isDark ? "#000000" : "#FFFFFF",
-      text: isDark ? "#FFFFFF" : "#1A1A1A",
-      primary: "#008080", // Couleur teal pour le logo
-      secondary: isDark ? "#2A2A2A" : "#F5F5F5",
-      border: isDark ? "#333333" : "#E5E5E5",
-    },
-  };
 
   const handleSearch = () => {
     if (query.trim()) {
@@ -39,11 +31,30 @@ const HomeScreen = () => {
     }
   };
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: "Perplexicapp",
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: theme.colors.background,
+        backgroundColor: Colors.light.background,
       }}
     >
       {/* Header */}
@@ -56,31 +67,31 @@ const HomeScreen = () => {
         }}
       >
         {/* Avatar placeholder */}
-        <TouchableOpacity>
+        <Link href="/settings">
           <View
             style={{
               width: 40,
               height: 40,
               borderRadius: 20,
-              backgroundColor: theme.colors.border,
+              backgroundColor: Colors.light.border,
             }}
           />
-        </TouchableOpacity>
+        </Link>
 
         {/* Logo */}
         <Text
           style={{
             fontSize: 24,
             fontWeight: "500",
-            color: theme.colors.text,
+            color: Colors.light.text,
           }}
         >
           Perplexica
         </Text>
 
         {/* Share button */}
-        <TouchableOpacity>
-          <Share2 size={24} color={theme.colors.text} />
+        <TouchableOpacity onPress={onShare}>
+          <Share2 size={24} color={Colors.light.text} />
         </TouchableOpacity>
       </View>
 
@@ -102,7 +113,7 @@ const HomeScreen = () => {
           <Text
             style={{
               fontSize: 48,
-              color: theme.colors.primary,
+              color: Colors.light.primary,
             }}
           >
             ❋
@@ -114,7 +125,7 @@ const HomeScreen = () => {
           style={{
             fontSize: 28,
             fontWeight: "600",
-            color: theme.colors.text,
+            color: Colors.light.text,
             textAlign: "center",
             marginBottom: 20,
           }}
@@ -133,7 +144,7 @@ const HomeScreen = () => {
         <View
           style={{
             flexDirection: "row",
-            backgroundColor: theme.colors.secondary,
+            backgroundColor: Colors.light.secondary,
             borderRadius: 25,
             padding: 12,
             alignItems: "center",
@@ -141,7 +152,7 @@ const HomeScreen = () => {
         >
           <Plus
             size={24}
-            color={theme.colors.text}
+            color={Colors.light.text}
             style={{ marginRight: 8 }}
           />
           <TextInput
@@ -151,7 +162,7 @@ const HomeScreen = () => {
             placeholderTextColor={isDark ? "#999999" : "#666666"}
             style={{
               flex: 1,
-              color: theme.colors.text,
+              color: Colors.light.text,
               fontSize: 16,
             }}
             onSubmitEditing={handleSearch}
@@ -159,7 +170,7 @@ const HomeScreen = () => {
             autoCapitalize="none"
             autoCorrect={false}
           />
-          <Mic size={24} color={theme.colors.text} />
+          <Mic size={24} color={Colors.light.text} />
         </View>
       </View>
     </SafeAreaView>

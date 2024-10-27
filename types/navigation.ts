@@ -1,5 +1,5 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/native";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -8,14 +8,20 @@ export type RootStackParamList = {
   };
 };
 
-export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
-export type ResultScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Result'>;
+export type HomeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
+export type ResultScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Result"
+>;
 
-export type ResultScreenRouteProp = RouteProp<RootStackParamList, 'Result'>;
+export type ResultScreenRouteProp = RouteProp<RootStackParamList, "Result">;
 
 // src/types/props.ts
-import { Theme } from './theme';
-import { Source } from './api';
+import { Theme } from "./theme";
+import { Source } from "./api";
 
 export interface HeaderProps {
   onClose: () => void;

@@ -17,8 +17,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Suggestions from "@/components/Suggestions";
 import { History } from "@/types/history";
 import { Ionicons } from "@expo/vector-icons";
+import * as Speech from "expo-speech";
+import { usePreferences } from "@/hooks/usePreferences";
 
 export default function Result() {
+  const { wsServerURL } = usePreferences();
   const params = useLocalSearchParams();
   const query = params.query;
   const chatId = params.id;
@@ -54,6 +57,10 @@ export default function Result() {
   };
 
   useEffect(() => {
+    if (!wsServerURL) {
+      return;
+    }
+
     if (chatId) {
       fetchChat();
       return;
@@ -65,7 +72,7 @@ export default function Result() {
       ]);
 
       // Construire l'URL avec les paramètres de connexion
-      const wsUrl = `ws://192.168.1.57:3001?chatModelProvider=ollama&chatModel=llama3.1:latest`;
+      const wsUrl = `${wsServerURL}?chatModelProvider=ollama&chatModel=llama3.1:latest`;
       wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {
@@ -122,7 +129,7 @@ export default function Result() {
     return () => {
       wsRef.current?.close();
     };
-  }, [query]);
+  }, [query, wsServerURL]);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -210,6 +217,7 @@ export default function Result() {
                 borderRadius: 20,
                 padding: 8,
               }}
+              onPress={() => Speech.speak(streamedMessage)}
             >
               <Headphones size={24} color={theme.colors.text} />
             </TouchableOpacity>

@@ -35,6 +35,15 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="result" options={{ headerShown: false }} />
+        <Stack.Screen name="settings" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="modals/server"
+          options={{ presentation: "modal", title: "Server URL" }}
+        />
+        <Stack.Screen
+          name="modals/wsserver"
+          options={{ presentation: "modal", title: "WebSocket Server URL" }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>

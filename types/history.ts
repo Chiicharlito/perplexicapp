@@ -1,4 +1,4 @@
 export type History = {
-    role: string;
-    content: string;
-}
+  role: string;
+  content: string;
+};

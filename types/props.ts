@@ -1,6 +1,10 @@
-import { Theme } from './theme';
-import { Source } from './api';
-import { HomeScreenNavigationProp, ResultScreenNavigationProp, ResultScreenRouteProp } from './navigation';
+import { Theme } from "./theme";
+import { Source } from "./api";
+import {
+  HomeScreenNavigationProp,
+  ResultScreenNavigationProp,
+  ResultScreenRouteProp,
+} from "./navigation";
 
 export interface HeaderProps {
   onClose: () => void;

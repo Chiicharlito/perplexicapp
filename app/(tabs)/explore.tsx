@@ -11,8 +11,10 @@ import {
 import { Search } from "lucide-react-native";
 import { NewsItem } from "@/types/explore";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { usePreferences } from "@/hooks/usePreferences";
 
 export default function Explore() {
+  const { serverURL } = usePreferences();
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const isDark = useColorScheme() === "dark";
@@ -32,7 +34,7 @@ export default function Explore() {
 
   const fetchNews = async () => {
     try {
-      const response = await fetch("http://192.168.1.57:3001/api/discover");
+      const response = await fetch(`${serverURL}/discover`);
       const data = await response.json();
       setNews(data.blogs);
     } catch (error) {
