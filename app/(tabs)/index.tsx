@@ -1,70 +1,169 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  useColorScheme,
+  TextInput,
+} from "react-native";
+import { Share2, Plus, Mic } from "lucide-react-native";
+import { useNavigation, useRouter } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const HomeScreen = () => {
+  const [query, setQuery] = useState<string>("");
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === "dark";
+  const router = useRouter();
 
-export default function HomeScreen() {
+  // Thème personnalisé
+  const theme = {
+    colors: {
+      background: isDark ? "#000000" : "#FFFFFF",
+      text: isDark ? "#FFFFFF" : "#1A1A1A",
+      primary: "#008080", // Couleur teal pour le logo
+      secondary: isDark ? "#2A2A2A" : "#F5F5F5",
+      border: isDark ? "#333333" : "#E5E5E5",
+    },
+  };
+
+  const handleSearch = () => {
+    if (query.trim()) {
+      router.push({
+        pathname: "/result",
+        params: {
+          query: query.trim(),
+        },
+      });
+      setQuery(""); // Reset le champ après la recherche
+    }
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
-}
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: theme.colors.background,
+      }}
+    >
+      {/* Header */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: 16,
+        }}
+      >
+        {/* Avatar placeholder */}
+        <TouchableOpacity>
+          <View
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              backgroundColor: theme.colors.border,
+            }}
+          />
+        </TouchableOpacity>
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+        {/* Logo */}
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: "500",
+            color: theme.colors.text,
+          }}
+        >
+          Perplexica
+        </Text>
+
+        {/* Share button */}
+        <TouchableOpacity>
+          <Share2 size={24} color={theme.colors.text} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Main Content */}
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          paddingHorizontal: 20,
+        }}
+      >
+        {/* Logo icon */}
+        <View
+          style={{
+            marginBottom: 20,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 48,
+              color: theme.colors.primary,
+            }}
+          >
+            ❋
+          </Text>
+        </View>
+
+        {/* Tagline */}
+        <Text
+          style={{
+            fontSize: 28,
+            fontWeight: "600",
+            color: theme.colors.text,
+            textAlign: "center",
+            marginBottom: 20,
+          }}
+        >
+          Where knowledge begins
+        </Text>
+      </View>
+
+      {/* Bottom Input Bar */}
+      <View
+        style={{
+          paddingHorizontal: 16,
+          paddingBottom: 16,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            backgroundColor: theme.colors.secondary,
+            borderRadius: 25,
+            padding: 12,
+            alignItems: "center",
+          }}
+        >
+          <Plus
+            size={24}
+            color={theme.colors.text}
+            style={{ marginRight: 8 }}
+          />
+          <TextInput
+            value={query}
+            onChangeText={setQuery}
+            placeholder="Ask anything..."
+            placeholderTextColor={isDark ? "#999999" : "#666666"}
+            style={{
+              flex: 1,
+              color: theme.colors.text,
+              fontSize: 16,
+            }}
+            onSubmitEditing={handleSearch}
+            returnKeyType="search"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <Mic size={24} color={theme.colors.text} />
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default HomeScreen;
