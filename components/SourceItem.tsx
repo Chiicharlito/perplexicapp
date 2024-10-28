@@ -7,10 +7,9 @@ export const SourceItem: React.FC<SourceItemProps> = ({ source, theme }) => (
     href={source.metadata.url}
     style={{
       backgroundColor: theme.colors.secondary,
-      borderRadius: 12,
+      borderRadius: 20,
       padding: 12,
       marginRight: 12,
-      width: 280,
     }}
   >
     <View
@@ -46,17 +45,8 @@ export const SourceItem: React.FC<SourceItemProps> = ({ source, theme }) => (
           flexWrap: "wrap",
         }}
       >
-        {source.metadata.title}
+        {source.metadata.title.slice(0, 30)}...
       </Text>
     </View>
-    <Text
-      numberOfLines={2}
-      style={{
-        color: theme.colors.text,
-        fontSize: 15,
-      }}
-    >
-      {source.pageContent.slice(0, 50) + "..."}
-    </Text>
   </ExternalLink>
 );

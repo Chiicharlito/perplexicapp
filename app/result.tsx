@@ -54,6 +54,9 @@ export default function Result() {
     const data = await getChat(chatId as string);
 
     setStreamedMessage(data.messages[1].content);
+    const parsedMetadata = JSON.parse(data.messages[1].metadata);
+
+    setSources(parsedMetadata.sources);
   };
 
   useEffect(() => {
@@ -71,12 +74,10 @@ export default function Result() {
         item.content,
       ]);
 
-      // Construire l'URL avec les paramètres de connexion
       const wsUrl = `${wsServerURL}?chatModelProvider=ollama&chatModel=llama3.1:latest`;
       wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {
-        // Envoyer la requête une fois la connexion établie
         const message = {
           type: "message",
           focusMode: "webSearch",
@@ -174,12 +175,30 @@ export default function Result() {
           {query}
         </Text>
 
-        <View style={{ marginBottom: 24 }}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: 16 }}
+        <View style={{ padding: 16 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 16,
+            }}
           >
+            <Ionicons
+              name="flower-outline"
+              size={20}
+              style={{ marginRight: 4 }}
+            />
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "600",
+                color: theme.colors.text,
+              }}
+            >
+              Sources
+            </Text>
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {!loading &&
               sources.length > 0 &&
               sources.map((source, index) => (
@@ -197,7 +216,7 @@ export default function Result() {
             }}
           >
             <Ionicons
-              name="disc-outline"
+              name="list-outline"
               size={20}
               style={{ marginRight: 4 }}
             />

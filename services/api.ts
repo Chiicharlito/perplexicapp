@@ -4,6 +4,7 @@ import { SearchResponse } from "../types/api";
 import { Chat } from "@/types/chat";
 import { History } from "@/types/history";
 import { getData } from "./storage";
+import { NewsItem } from "@/types/explore";
 
 // Utilitaire pour les appels API
 const fetchApi = async <T>(
@@ -12,7 +13,7 @@ const fetchApi = async <T>(
 ): Promise<T> => {
   try {
     const urlServer = await getData("serverURL");
-    const response = await fetch(`${urlServer}${endpoint}`, {
+    const response = await fetch(`${urlServer}/api${endpoint}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +63,7 @@ export const searchApi = async (
       focusMode: "webSearch",
       optimizationMode: "balanced",
       query: `${query}. Réponds uniquement dans la même langue que la requête. Recherche des sources uniquement en Français.`,
-      history: parsedHistory, // Utilisation du tableau parsé
+      history: parsedHistory,
     }),
   });
 };
@@ -90,4 +91,9 @@ export const getChatsHistory = async (): Promise<Chat[]> => {
 
 export const getChat = async (id: string): Promise<Chat> => {
   return fetchApi<Chat>(`/chats/${id}`);
+};
+
+export const getNews = async () => {
+    const response = await fetchApi<{ blogs: NewsItem[] }>("/discover");
+    return response.blogs;
 };
