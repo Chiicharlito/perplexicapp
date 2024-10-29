@@ -9,19 +9,20 @@ import {
   Alert,
   Pressable,
 } from "react-native";
-import { Share2, ScanEye } from "lucide-react-native";
+import { Share2, ScanEye, Settings, Zap } from "lucide-react-native";
 import { Link, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
 import { SearchContext } from "@/providers/searchProvider";
 import { SearchTypeIcon } from "@/services/searchTypeIcon";
+import { OptimizationMode } from "@/services/optimizationMode";
 
 const HomeScreen = () => {
   const [query, setQuery] = useState<string>("");
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const router = useRouter();
-  const { focusMode } = useContext(SearchContext);
+  const { focusMode, optimizationMode } = useContext(SearchContext);
 
   const handleSearch = () => {
     if (query.trim()) {
@@ -30,6 +31,7 @@ const HomeScreen = () => {
         params: {
           query: query.trim(),
           focusMode,
+          optimizationMode,
         },
       });
       setQuery(""); // Reset le champ après la recherche
@@ -73,14 +75,7 @@ const HomeScreen = () => {
       >
         {/* Avatar placeholder */}
         <Link href="/settings">
-          <View
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: Colors.light.border,
-            }}
-          />
+          <Settings size={24} color={Colors.light.text} />
         </Link>
 
         {/* Logo */}
@@ -139,7 +134,7 @@ const HomeScreen = () => {
             alignItems: "center",
           }}
         >
-          <Pressable onPress={() => router.push("/modals/searchtype")}>
+          <Pressable onPress={() => router.push("/modals/focusMode")}>
             {focusMode === "webSearch" ? (
               <ScanEye color={Colors.light.text} size={24} />
             ) : (
@@ -165,6 +160,9 @@ const HomeScreen = () => {
             autoCapitalize="none"
             autoCorrect={false}
           />
+          <Pressable onPress={() => router.push("/modals/optimizationMode")}>
+            <OptimizationMode optimizationMode={optimizationMode} />
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>

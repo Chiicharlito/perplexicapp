@@ -1,6 +1,6 @@
-import { SearchTypes } from "@/constants/SearchTypes";
+import { OptimizationModes } from "@/constants/OptimizationsModes";
 import { SearchContext } from "@/providers/searchProvider";
-import { SearchTypeIcon } from "@/services/searchTypeIcon";
+import { OptimizationMode } from "@/services/optimizationMode";
 import { useRouter } from "expo-router";
 import { useContext } from "react";
 import {
@@ -12,9 +12,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function SearchTypeModal() {
+export default function OptimizationModeModal() {
   const router = useRouter();
-  const { focusMode, setFocusMode } = useContext(SearchContext);
+  const { optimizationMode, setOptimizationMode } = useContext(SearchContext);
   const theme = useColorScheme();
 
   return (
@@ -22,11 +22,11 @@ export default function SearchTypeModal() {
       style={{ flex: 1, paddingHorizontal: 16, backgroundColor: "#fff" }}
     >
       <ScrollView>
-        {SearchTypes.map((searchType) => (
+        {OptimizationModes.map((mode) => (
           <Pressable
-            key={searchType.focusMode}
+            key={mode.title}
             onPress={() => {
-              setFocusMode(searchType.focusMode);
+              setOptimizationMode(mode.optimizationMode);
               router.back();
             }}
             style={{
@@ -40,22 +40,21 @@ export default function SearchTypeModal() {
             <View
               style={{ flexDirection: "row", gap: 8, alignItems: "center" }}
             >
-              <SearchTypeIcon
-                searchType={searchType.focusMode}
-                color={focusMode === searchType.focusMode ? "#24A0ED" : "#000"}
-              />
+              <OptimizationMode optimizationMode={mode.optimizationMode} />
               <Text
                 style={{
                   fontWeight: "700",
                   color:
-                    focusMode === searchType.focusMode ? "#24A0ED" : "#000",
+                    optimizationMode === mode.optimizationMode
+                      ? "#24A0ED"
+                      : "#000",
                 }}
               >
-                {searchType.label}
+                {mode.title}
               </Text>
             </View>
             <Text style={{ color: "#777", fontWeight: "400" }}>
-              {searchType.description}
+              {mode.description}
             </Text>
           </Pressable>
         ))}

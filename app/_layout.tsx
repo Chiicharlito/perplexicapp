@@ -47,8 +47,12 @@ export default function RootLayout() {
             options={{ presentation: "modal", title: "WebSocket Server URL" }}
           />
           <Stack.Screen
-            name="modals/searchtype"
+            name="modals/focusMode"
             options={{ presentation: "modal", title: "Focus Mode" }}
+          />
+          <Stack.Screen
+            name="modals/optimizationMode"
+            options={{ presentation: "modal", title: "Optimization Mode" }}
           />
           <Stack.Screen name="+not-found" />
         </Stack>

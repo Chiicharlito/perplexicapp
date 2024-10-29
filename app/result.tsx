@@ -25,6 +25,7 @@ export default function Result() {
   const query = params.query;
   const chatId = params.id;
   const focusMode = params.focusMode;
+  const optimizationMode = params.optimizationMode;
   const router = useRouter();
   const wsRef = useRef<WebSocket | null>(null);
 
@@ -81,7 +82,7 @@ export default function Result() {
         const message = {
           type: "message",
           focusMode: focusMode || "webSearch",
-          optimizationMode: "balanced",
+          optimizationMode: optimizationMode || "speed",
           history: parsedHistory,
           message: {
             content: query,

@@ -35,6 +35,8 @@ const fetchApi = async <T>(
 export const searchApi = async (
   query: string,
   history?: History[],
+  focusMode?: string,
+  optimizationMode?: string,
 ): Promise<SearchResponse> => {
   const parsedHistory: [string, string][] = [];
 
@@ -60,8 +62,8 @@ export const searchApi = async (
       embeddingModel: {
         provider: "local",
       },
-      focusMode: "webSearch",
-      optimizationMode: "balanced",
+      focusMode: focusMode || "webSearch",
+      optimizationMode: optimizationMode || "speed",
       query: `${query}. Réponds uniquement dans la même langue que la requête. Recherche des sources uniquement en Français.`,
       history: parsedHistory,
     }),
@@ -94,6 +96,11 @@ export const getChat = async (id: string): Promise<Chat> => {
 };
 
 export const getNews = async () => {
-    const response = await fetchApi<{ blogs: NewsItem[] }>("/discover");
-    return response.blogs;
+  const response = await fetchApi<{ blogs: NewsItem[] }>("/discover");
+  return response.blogs;
+};
+
+export const getImages = async () => {
+  const response = await fetchApi<{ images: string[] }>("/images");
+  return response.images;
 };
