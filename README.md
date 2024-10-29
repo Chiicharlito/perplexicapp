@@ -1,8 +1,30 @@
-# Welcome to your Expo app 👋
+# PerplexicApp
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an unofficial cross-platform mobile App for the [Perplexica](https://github.com/ItzCrazyKns/Perplexica) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+## Context
+
+I've been very excited about using Perplexity, but like many products, it's closed-source so there's no privacy guarantee. When I discovered the Perplexica project, I immediately loved it!
+
+Being a Web Developer, I started developing a Perplexity-like app. Some features are still inactive but will be developed soon. Feel free to contribute!
+
+This is my first Open Source project, so thank you for any helpful and respectful advice!
+
+Made with ❤️
+
+PS: I'm French, so please excuse any writing mistakes 😅
+
+## Screenshots
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+  <img src="assets/previews/home.png" width="200" alt="Home Screen" />
+  <img src="assets/previews/discover.png" width="200" alt="Search Screen" />
+  <img src="assets/previews/library.png" width="200" alt="Library Screen" />
+  <img src="assets/previews/focus.png" width="200" alt="Result Screen" />
+  <img src="assets/previews/optimization.png" width="200" alt="Discover Screen" />
+</div>
+
+## Getting Started
 
 1. Install dependencies
 
@@ -16,35 +38,15 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
     npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Settings
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+In the settings page, you can at this time set the Server and Websockets URL of the running instance of your Perplexica (mine is running on my Mac Studio so I've put my internal IP)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## ToDo
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Format Response Text (bold, lists, etc)
+- Change more settings like models
+- Fix Library item text overflow
+- Clean code
+- Refacto
+- Write tests

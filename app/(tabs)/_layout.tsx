@@ -1,9 +1,9 @@
 import { Tabs } from "expo-router";
 import React from "react";
 
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { BookOpenText, Home, Search } from "lucide-react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -18,11 +18,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Search",
+          title: "Home",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "search-circle" : "search-circle-outline"}
-              color={color}
+            <Home
+              color={focused ? Colors[colorScheme ?? "light"].tint : color}
             />
           ),
         }}
@@ -30,11 +29,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="explore"
         options={{
-          title: "Explore",
+          title: "Discover",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "globe" : "globe-outline"}
-              color={color}
+            <Search
+              color={focused ? Colors[colorScheme ?? "light"].tint : color}
             />
           ),
         }}
@@ -42,11 +40,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="chats/index"
         options={{
-          title: "History",
+          title: "Library",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "book" : "book-outline"}
-              color={color}
+            <BookOpenText
+              color={focused ? Colors[colorScheme ?? "light"].tint : color}
             />
           ),
         }}

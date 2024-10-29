@@ -21,10 +21,12 @@ export const SourceItem: React.FC<SourceItemProps> = ({ source, theme }) => (
         overflow: "hidden",
       }}
     >
-      {source.metadata.favicon ? (
+      {source.metadata.url ? (
         <Image
-          source={{ uri: source.metadata.favicon }}
-          style={{ width: 16, height: 16, marginRight: 8 }}
+          source={{
+            uri: `https://s2.googleusercontent.com/s2/favicons?domain_url=${source.metadata.url}`,
+          }}
+          style={{ width: 16, height: 16, marginRight: 8, borderRadius: 8 }}
         />
       ) : (
         <View
