@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { Layers3 } from "lucide-react-native";
 import {
   ActivityIndicator,
   Pressable,
@@ -47,7 +48,11 @@ export default function Suggestions({
           marginBottom: 16,
         }}
       >
-        <Ionicons name="flash-outline" size={24} color={theme.colors.text} />
+        <Layers3
+          size={24}
+          style={{ marginRight: 8 }}
+          color={theme.colors.text}
+        />
         <Text
           style={{
             fontSize: 20,

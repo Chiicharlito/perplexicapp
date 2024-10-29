@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -7,17 +7,21 @@ import {
   TextInput,
   Share,
   Alert,
+  Pressable,
 } from "react-native";
-import { Share2, Plus, Mic } from "lucide-react-native";
+import { Share2, ScanEye } from "lucide-react-native";
 import { Link, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
+import { SearchContext } from "@/providers/searchProvider";
+import { SearchTypeIcon } from "@/services/searchTypeIcon";
 
 const HomeScreen = () => {
   const [query, setQuery] = useState<string>("");
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const router = useRouter();
+  const { focusMode } = useContext(SearchContext);
 
   const handleSearch = () => {
     if (query.trim()) {
@@ -25,6 +29,7 @@ const HomeScreen = () => {
         pathname: "/result",
         params: {
           query: query.trim(),
+          focusMode,
         },
       });
       setQuery(""); // Reset le champ après la recherche
@@ -104,22 +109,6 @@ const HomeScreen = () => {
           paddingHorizontal: 20,
         }}
       >
-        {/* Logo icon */}
-        <View
-          style={{
-            marginBottom: 20,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 48,
-              color: Colors.light.primary,
-            }}
-          >
-            ❋
-          </Text>
-        </View>
-
         {/* Tagline */}
         <Text
           style={{
@@ -130,7 +119,7 @@ const HomeScreen = () => {
             marginBottom: 20,
           }}
         >
-          Where knowledge begins
+          Research begins here.
         </Text>
       </View>
 
@@ -150,11 +139,16 @@ const HomeScreen = () => {
             alignItems: "center",
           }}
         >
-          <Plus
-            size={24}
-            color={Colors.light.text}
-            style={{ marginRight: 8 }}
-          />
+          <Pressable onPress={() => router.push("/modals/searchtype")}>
+            {focusMode === "webSearch" ? (
+              <ScanEye color={Colors.light.text} size={24} />
+            ) : (
+              <SearchTypeIcon
+                searchType={focusMode}
+                color={Colors.light.text}
+              />
+            )}
+          </Pressable>
           <TextInput
             value={query}
             onChangeText={setQuery}
@@ -164,13 +158,13 @@ const HomeScreen = () => {
               flex: 1,
               color: Colors.light.text,
               fontSize: 16,
+              paddingLeft: 12,
             }}
             onSubmitEditing={handleSearch}
             returnKeyType="search"
             autoCapitalize="none"
             autoCorrect={false}
           />
-          <Mic size={24} color={Colors.light.text} />
         </View>
       </View>
     </SafeAreaView>

@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import SearchProvider from "@/providers/searchProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -32,20 +33,26 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="result" options={{ headerShown: false }} />
-        <Stack.Screen name="settings" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modals/server"
-          options={{ presentation: "modal", title: "Server URL" }}
-        />
-        <Stack.Screen
-          name="modals/wsserver"
-          options={{ presentation: "modal", title: "WebSocket Server URL" }}
-        />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <SearchProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="result" options={{ headerShown: false }} />
+          <Stack.Screen name="settings" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="modals/server"
+            options={{ presentation: "modal", title: "Server URL" }}
+          />
+          <Stack.Screen
+            name="modals/wsserver"
+            options={{ presentation: "modal", title: "WebSocket Server URL" }}
+          />
+          <Stack.Screen
+            name="modals/searchtype"
+            options={{ presentation: "modal", title: "Focus Mode" }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </SearchProvider>
     </ThemeProvider>
   );
 }

@@ -1,7 +1,6 @@
 import { getData, storeData } from "@/services/storage";
-import { Preferences } from "@/types/preferences";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ServerModal() {

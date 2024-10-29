@@ -12,11 +12,10 @@ import { Header } from "@/components/Header";
 import { SourceItem } from "@/components/SourceItem";
 import { BottomInput } from "@/components/BottomInput";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Headphones } from "lucide-react-native";
+import { Headphones, Disc3, BookCopy } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Suggestions from "@/components/Suggestions";
 import { History } from "@/types/history";
-import { Ionicons } from "@expo/vector-icons";
 import * as Speech from "expo-speech";
 import { usePreferences } from "@/hooks/usePreferences";
 
@@ -25,6 +24,7 @@ export default function Result() {
   const params = useLocalSearchParams();
   const query = params.query;
   const chatId = params.id;
+  const focusMode = params.focusMode;
   const router = useRouter();
   const wsRef = useRef<WebSocket | null>(null);
 
@@ -80,7 +80,7 @@ export default function Result() {
       wsRef.current.onopen = () => {
         const message = {
           type: "message",
-          focusMode: "webSearch",
+          focusMode: focusMode || "webSearch",
           optimizationMode: "balanced",
           history: parsedHistory,
           message: {
@@ -183,10 +183,10 @@ export default function Result() {
               marginBottom: 16,
             }}
           >
-            <Ionicons
-              name="flower-outline"
-              size={20}
+            <BookCopy
+              size={24}
               style={{ marginRight: 4 }}
+              color={theme.colors.text}
             />
             <Text
               style={{
@@ -215,10 +215,10 @@ export default function Result() {
               marginBottom: 16,
             }}
           >
-            <Ionicons
-              name="list-outline"
-              size={20}
+            <Disc3
+              size={24}
               style={{ marginRight: 4 }}
+              color={theme.colors.text}
             />
             <Text
               style={{
