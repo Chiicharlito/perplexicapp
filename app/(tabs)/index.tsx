@@ -41,18 +41,11 @@ const HomeScreen = () => {
 
   const onShare = async () => {
     try {
-      const result = await Share.share({
-        message: "Perplexicapp",
+      await Share.share({
+        title: "Perplexicapp",
+        message:
+          "Discover Perplexica App for Perplexica Project : https://github.com/Chiicharlito/perplexicapp",
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
     } catch (error: any) {
       Alert.alert(error.message);
     }
