@@ -1,13 +1,7 @@
+import { History } from "@/types/history";
 import React, { createContext } from "react";
 
-export const SearchContext = createContext({
-  query: "",
-  setQuery: (query: string) => {},
-  focusMode: "webSearch",
-  optimizationMode: "speed",
-  setFocusMode: (focusMode: string) => {},
-  setOptimizationMode: (optimizationMode: string) => {},
-});
+export const SearchContext = createContext({});
 
 export default function SearchProvider({
   children,
@@ -15,6 +9,7 @@ export default function SearchProvider({
   const [query, setQuery] = React.useState("");
   const [focusMode, setFocusMode] = React.useState("webSearch");
   const [optimizationMode, setOptimizationMode] = React.useState("speed");
+  const [history, setHistory] = React.useState<History[]>([]);
 
   return (
     <SearchContext.Provider
@@ -26,6 +21,8 @@ export default function SearchProvider({
         setFocusMode: (focusMode: string) => setFocusMode(focusMode),
         setOptimizationMode: (optimizationMode: string) =>
           setOptimizationMode(optimizationMode),
+        history: history,
+        setHistory: (history: History[]) => setHistory(history),
       }}
     >
       {children}

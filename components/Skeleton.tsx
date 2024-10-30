@@ -19,7 +19,7 @@ const SkeletonLoader = () => {
           duration: 1000,
           useNativeDriver: true,
         }),
-      ]),
+      ])
     ).start();
   }, []);
 
@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
     height: 10,
     backgroundColor: "#E1E9EE",
     borderRadius: 4,
-    width: width - 32, // Largeur totale moins le padding
+    // width: width - 32, // Largeur totale moins le padding
   },
   shortLine: {
     height: 10,
     backgroundColor: "#E1E9EE",
     borderRadius: 4,
-    width: width - 200, // Largeur totale moins le padding
+    // width: width - 200, // Largeur totale moins le padding
   },
 });
 

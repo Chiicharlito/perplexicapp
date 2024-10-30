@@ -3,13 +3,11 @@ import {
   View,
   Text,
   ScrollView,
-  ActivityIndicator,
   TouchableOpacity,
   useColorScheme,
   StyleSheet,
   Animated,
   Easing,
-  Button,
 } from "react-native";
 import { getChat, getSuggestions } from "@/services/api";
 import { Header } from "@/components/Header";
@@ -223,6 +221,7 @@ export default function Result() {
                     <Text
                       style={{
                         fontSize: 20,
+                        marginLeft: 8,
                         fontWeight: "600",
                         color: theme.colors.text,
                       }}
