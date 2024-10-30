@@ -7,6 +7,7 @@ import {
   TextInput,
   Share,
   Alert,
+  StyleSheet,
   Pressable,
 } from "react-native";
 import { Share2, ScanEye, Settings, Zap } from "lucide-react-native";
@@ -58,36 +59,16 @@ const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: Colors.light.background,
-      }}
-    >
+    <SafeAreaView style={styles.safeview}>
       {/* Header */}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: 16,
-        }}
-      >
+      <View style={styles.header}>
         {/* Avatar placeholder */}
         <Link href="/settings">
           <Settings size={24} color={Colors.light.text} />
         </Link>
 
         {/* Logo */}
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: "500",
-            color: Colors.light.text,
-          }}
-        >
-          Perplexica
-        </Text>
+        <Text style={styles.logo}>Perplexica</Text>
 
         {/* Share button */}
         <TouchableOpacity onPress={onShare}>
@@ -96,44 +77,14 @@ const HomeScreen = () => {
       </View>
 
       {/* Main Content */}
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          paddingHorizontal: 20,
-        }}
-      >
+      <View style={styles.mainContent}>
         {/* Tagline */}
-        <Text
-          style={{
-            fontSize: 28,
-            fontWeight: "600",
-            color: Colors.light.text,
-            textAlign: "center",
-            marginBottom: 20,
-          }}
-        >
-          Research begins here.
-        </Text>
+        <Text style={styles.tagline}>Research begins here.</Text>
       </View>
 
       {/* Bottom Input Bar */}
-      <View
-        style={{
-          paddingHorizontal: 16,
-          paddingBottom: 16,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            backgroundColor: Colors.light.secondary,
-            borderRadius: 25,
-            padding: 12,
-            alignItems: "center",
-          }}
-        >
+      <View style={styles.bottomInputBarContainer}>
+        <View style={styles.bottomInputBarView}>
           <Pressable onPress={() => router.push("/modals/focusMode")}>
             {focusMode === "webSearch" ? (
               <ScanEye color={Colors.light.text} size={24} />
@@ -149,12 +100,7 @@ const HomeScreen = () => {
             onChangeText={setQuery}
             placeholder="Ask anything..."
             placeholderTextColor={isDark ? "#999999" : "#666666"}
-            style={{
-              flex: 1,
-              color: Colors.light.text,
-              fontSize: 16,
-              paddingLeft: 12,
-            }}
+            style={styles.textInput}
             onSubmitEditing={handleSearch}
             returnKeyType="search"
             autoCapitalize="none"
@@ -168,5 +114,53 @@ const HomeScreen = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeview: {
+    flex: 1,
+    backgroundColor: Colors.light.background,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+  },
+  logo: {
+    fontSize: 24,
+    fontWeight: "500",
+    color: Colors.light.text,
+  },
+  mainContent: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  tagline: {
+    fontSize: 28,
+    fontWeight: "600",
+    color: Colors.light.text,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  bottomInputBarContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
+  bottomInputBarView: {
+    flexDirection: "row",
+    backgroundColor: Colors.light.secondary,
+    borderRadius: 25,
+    padding: 12,
+    alignItems: "center",
+  },
+  textInput: {
+    flex: 1,
+    color: Colors.light.text,
+    fontSize: 16,
+    paddingLeft: 12,
+  },
+});
 
 export default HomeScreen;
