@@ -4,7 +4,7 @@ export const SearchContext = createContext({
   query: "",
   setQuery: (query: string) => {},
   focusMode: "webSearch",
-  optimizationMode: "balanced",
+  optimizationMode: "speed",
   setFocusMode: (focusMode: string) => {},
   setOptimizationMode: (optimizationMode: string) => {},
 });
@@ -14,7 +14,7 @@ export default function SearchProvider({
 }: React.PropsWithChildren<{}>) {
   const [query, setQuery] = React.useState("");
   const [focusMode, setFocusMode] = React.useState("webSearch");
-  const [optimizationMode, setOptimizationMode] = React.useState("balanced");
+  const [optimizationMode, setOptimizationMode] = React.useState("speed");
 
   return (
     <SearchContext.Provider

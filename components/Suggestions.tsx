@@ -8,6 +8,7 @@ import {
   useColorScheme,
   View,
 } from "react-native";
+import SkeletonLoader from "./Skeleton";
 
 export default function Suggestions({
   suggestions,
@@ -64,7 +65,7 @@ export default function Suggestions({
         </Text>
       </View>
       {isLoading ? (
-        <ActivityIndicator size="large" />
+        <SkeletonLoader />
       ) : (
         suggestions?.map((suggestion, index) => (
           <Pressable

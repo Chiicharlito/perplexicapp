@@ -6,6 +6,10 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   useColorScheme,
+  StyleSheet,
+  Animated,
+  Easing,
+  Button,
 } from "react-native";
 import { getChat, getSuggestions } from "@/services/api";
 import { Header } from "@/components/Header";
@@ -18,6 +22,7 @@ import Suggestions from "@/components/Suggestions";
 import { History } from "@/types/history";
 import * as Speech from "expo-speech";
 import { usePreferences } from "@/hooks/usePreferences";
+import SkeletonLoader from "@/components/Skeleton";
 
 export default function Result() {
   const { wsServerURL } = usePreferences();
@@ -37,6 +42,27 @@ export default function Result() {
   const isDark = useColorScheme() === "dark";
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState<string[] | null>(null);
+  const rotateAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const timing = Animated.timing(rotateAnim, {
+      toValue: 1,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    });
+    if (!loading) {
+      Animated.loop(timing).stop();
+      return;
+    }
+
+    Animated.loop(timing).start();
+  }, [loading]);
+
+  const spin = rotateAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
 
   const theme = {
     colors: {
@@ -161,96 +187,96 @@ export default function Result() {
   }, [loading, streamedMessage]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <SafeAreaView
+      style={[
+        styles.safeAreaView,
+        { backgroundColor: theme.colors.background },
+      ]}
+    >
       <Header onClose={() => router.replace("/")} query={query} theme={theme} />
-
       <ScrollView>
-        <Text
-          style={{
-            fontSize: 28,
-            fontWeight: "600",
-            color: theme.colors.text,
-            padding: 16,
-          }}
-        >
+        <Text style={[styles.query, { color: theme.colors.text }]}>
           {query}
         </Text>
 
-        <View style={{ padding: 16 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 16,
-            }}
-          >
-            <BookCopy
-              size={24}
-              style={{ marginRight: 4 }}
-              color={theme.colors.text}
-            />
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "600",
-                color: theme.colors.text,
-              }}
-            >
-              Sources
-            </Text>
-          </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {!loading &&
-              sources.length > 0 &&
-              sources.map((source, index) => (
-                <SourceItem key={index} source={source} theme={theme} />
-              ))}
-          </ScrollView>
-        </View>
-
-        <View style={{ padding: 16 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 16,
-            }}
-          >
-            <Disc3
-              size={24}
-              style={{ marginRight: 4 }}
-              color={theme.colors.text}
-            />
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "600",
-                color: theme.colors.text,
-              }}
-            >
-              Answer
-            </Text>
-            <TouchableOpacity
-              style={{
-                marginLeft: "auto",
-                backgroundColor: theme.colors.secondary,
-                borderRadius: 20,
-                padding: 8,
-              }}
-              onPress={() => Speech.speak(streamedMessage)}
-            >
-              <Headphones size={24} color={theme.colors.text} />
-            </TouchableOpacity>
-          </View>
-
-          {loading && !streamedMessage ? (
-            <ActivityIndicator size="large" />
-          ) : (
-            <View>
-              {error ? (
-                <Text style={{ color: "red" }}>{error}</Text>
-              ) : (
-                <>
+        {loading && !streamedMessage ? (
+          <SkeletonLoader />
+        ) : (
+          <View>
+            {error ? (
+              <Text style={{ color: "red" }}>{error}</Text>
+            ) : (
+              <>
+                <View style={{ padding: 16 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginBottom: 16,
+                    }}
+                  >
+                    <BookCopy
+                      size={24}
+                      style={{ marginRight: 4 }}
+                      color={theme.colors.text}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "600",
+                        color: theme.colors.text,
+                      }}
+                    >
+                      Sources
+                    </Text>
+                  </View>
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {!loading &&
+                      sources.length > 0 &&
+                      sources.map((source, index) => (
+                        <SourceItem key={index} source={source} theme={theme} />
+                      ))}
+                  </ScrollView>
+                </View>
+                <View style={{ padding: 16 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginBottom: 16,
+                    }}
+                  >
+                    <Animated.View
+                      style={{
+                        transform: [{ rotate: spin }],
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Disc3 size={24} color={theme.colors.text} />
+                    </Animated.View>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: "600",
+                        marginLeft: 8,
+                        color: theme.colors.text,
+                      }}
+                    >
+                      Answer
+                    </Text>
+                    <TouchableOpacity
+                      style={{
+                        marginLeft: "auto",
+                        backgroundColor: theme.colors.secondary,
+                        borderRadius: 20,
+                        padding: 8,
+                      }}
+                      onPress={() => Speech.speak(streamedMessage)}
+                    >
+                      <Headphones size={24} color={theme.colors.text} />
+                    </TouchableOpacity>
+                  </View>
                   <Text
                     style={{
                       fontSize: 16,
@@ -264,14 +290,25 @@ export default function Result() {
                     suggestions={suggestions}
                     isLoading={isLoadingSuggestions}
                   />
-                </>
-              )}
-            </View>
-          )}
-        </View>
+                </View>
+              </>
+            )}
+          </View>
+        )}
       </ScrollView>
 
       <BottomInput theme={theme} />
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
+  query: {
+    fontSize: 24,
+    fontWeight: "400",
+    padding: 16,
+  },
+});
