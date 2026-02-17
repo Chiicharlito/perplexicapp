@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
-import { Share2, ScanEye, Settings, Zap } from "lucide-react-native";
+import { Share2, ScanEye, Settings } from "lucide-react-native";
 import { Link, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";

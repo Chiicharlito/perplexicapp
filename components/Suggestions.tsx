@@ -2,7 +2,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Layers3 } from "lucide-react-native";
 import {
-  ActivityIndicator,
   Pressable,
   Text,
   useColorScheme,
