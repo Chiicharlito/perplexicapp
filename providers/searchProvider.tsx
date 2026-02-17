@@ -1,7 +1,27 @@
 import { History } from "@/types/history";
 import React, { createContext } from "react";
 
-export const SearchContext = createContext({});
+interface SearchContextType {
+  query: string;
+  setQuery: (query: string) => void;
+  focusMode: string;
+  setFocusMode: (mode: string) => void;
+  optimizationMode: string;
+  setOptimizationMode: (mode: string) => void;
+  history: History[];
+  setHistory: (history: History[]) => void;
+}
+
+export const SearchContext = createContext<SearchContextType>({
+  query: "",
+  setQuery: () => {},
+  focusMode: "webSearch",
+  setFocusMode: () => {},
+  optimizationMode: "speed",
+  setOptimizationMode: () => {},
+  history: [],
+  setHistory: () => {},
+});
 
 export default function SearchProvider({
   children,

@@ -16,11 +16,9 @@ import { getChatsHistory } from "@/services/api";
 
 type SearchItem = {
   id: string;
-  query: string;
-  preview: string;
-  timestamp: string;
-  isLocked?: boolean;
-  image?: string;
+  title: string;
+  createdAt: string;
+  focusMode?: string;
 };
 
 export default function History() {
