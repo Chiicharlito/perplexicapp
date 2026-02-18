@@ -12,6 +12,8 @@ PerplexicApp is a cross-platform mobile client for [Perplexica](https://github.c
 
 **Upstream dependency**: This app consumes the Perplexica API. Before implementing new features, check the [Perplexica source](https://github.com/ItzCrazyKns/Perplexica) for latest API changes to maintain feature parity. The app must stay ISO with the upstream project's API surface.
 
+**API Reference**: See `docs/PERPLEXICA_API.md` for the full upstream API spec, breaking changes, and migration checklist. The app is currently behind the upstream — key gaps include WebSocket→SSE migration, dynamic provider/model selection, and `focusMode`→`sources` migration.
+
 ## Commands
 
 ```bash
