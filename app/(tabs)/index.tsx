@@ -46,8 +46,8 @@ const HomeScreen = () => {
         message:
           "Discover Perplexica App for Perplexica Project : https://github.com/Chiicharlito/perplexicapp",
       });
-    } catch (error: any) {
-      Alert.alert(error.message);
+    } catch (error: unknown) {
+      Alert.alert(error instanceof Error ? error.message : "An error occurred");
     }
   };
 
@@ -82,10 +82,7 @@ const HomeScreen = () => {
             {focusMode === "webSearch" ? (
               <ScanEye color={Colors.light.text} size={24} />
             ) : (
-              <SearchTypeIcon
-                searchType={focusMode}
-                color={Colors.light.text}
-              />
+              <SearchTypeIcon searchType={focusMode} color={Colors.light.text} />
             )}
           </Pressable>
           <TextInput

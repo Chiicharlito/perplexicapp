@@ -4,5 +4,5 @@ export type Message = {
   chatId: string;
   messageId: string;
   role: string;
-  metadata: any;
+  metadata: string;
 };

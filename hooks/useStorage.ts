@@ -10,7 +10,7 @@ export function useStorage({ key }: { key: string }) {
     }
   };
 
-  const storeData = async (value: any) => {
+  const storeData = async (value: unknown) => {
     try {
       const jsonValue = JSON.stringify(value);
       await AsyncStorage.setItem(key, jsonValue);
