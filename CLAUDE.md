@@ -1,3 +1,7 @@
+# SOUL
+
+always read ~/.claude/SOUL.md before continue.
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
@@ -7,6 +11,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 PerplexicApp is a cross-platform mobile client for [Perplexica](https://github.com/ItzCrazyKns/Perplexica) (open-source Perplexity AI alternative), built with Expo SDK 54, React 19.1, and React Native 0.81.5.
 
 **Upstream dependency**: This app consumes the Perplexica API. Before implementing new features, check the [Perplexica source](https://github.com/ItzCrazyKns/Perplexica) for latest API changes to maintain feature parity. The app must stay ISO with the upstream project's API surface.
+
+**API Reference**: See `docs/PERPLEXICA_API.md` for the full upstream API spec, breaking changes, and migration checklist. The app is currently behind the upstream — key gaps include WebSocket→SSE migration, dynamic provider/model selection, and `focusMode`→`sources` migration.
 
 ## Commands
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
   Text,
@@ -55,6 +55,7 @@ export default function Result() {
     }
 
     Animated.loop(timing).start();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   const spin = rotateAnim.interpolate({
@@ -76,14 +77,15 @@ export default function Result() {
     return Math.random().toString(36).substring(2) + Date.now().toString(36);
   };
 
-  const fetchChat = async () => {
+  const fetchChat = useCallback(async () => {
+    if (!chatId) return;
     const data = await getChat(chatId as string);
 
     setStreamedMessage(data.messages[1].content);
     const parsedMetadata = JSON.parse(data.messages[1].metadata);
 
     setSources(parsedMetadata.sources);
-  };
+  }, [chatId]);
 
   useEffect(() => {
     if (!wsServerURL) {
@@ -139,7 +141,7 @@ export default function Result() {
         }
       };
 
-      wsRef.current.onerror = (error) => {
+      wsRef.current.onerror = () => {
         setError("WebSocket error occurred");
         setLoading(false);
       };
@@ -156,22 +158,19 @@ export default function Result() {
     return () => {
       wsRef.current?.close();
     };
-  }, [query, wsServerURL]);
+  }, [query, wsServerURL, chatId, fetchChat, focusMode, optimizationMode, history]);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
       setIsLoadingSuggestions(true);
       try {
-        setHistory([
+        const historyData = [
           ...history,
           { role: "user", content: streamedMessage },
           { role: "assistant", content: query as string },
-        ]);
-        const data = await getSuggestions([
-          ...history,
-          { role: "user", content: streamedMessage },
-          { role: "assistant", content: query as string },
-        ]);
+        ];
+        setHistory(historyData);
+        const data = await getSuggestions(historyData);
         setSuggestions(data?.suggestions);
       } catch (error) {
         console.log(error);
@@ -183,20 +182,14 @@ export default function Result() {
     if (!loading && streamedMessage) {
       fetchSuggestions();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, streamedMessage]);
 
   return (
-    <SafeAreaView
-      style={[
-        styles.safeAreaView,
-        { backgroundColor: theme.colors.background },
-      ]}
-    >
+    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: theme.colors.background }]}>
       <Header onClose={() => router.replace("/")} theme={theme} />
       <ScrollView>
-        <Text style={[styles.query, { color: theme.colors.text }]}>
-          {query}
-        </Text>
+        <Text style={[styles.query, { color: theme.colors.text }]}>{query}</Text>
 
         {loading && !streamedMessage ? (
           <SkeletonLoader />
@@ -214,11 +207,7 @@ export default function Result() {
                       marginBottom: 16,
                     }}
                   >
-                    <BookCopy
-                      size={24}
-                      style={{ marginRight: 4 }}
-                      color={theme.colors.text}
-                    />
+                    <BookCopy size={24} style={{ marginRight: 4 }} color={theme.colors.text} />
                     <Text
                       style={{
                         fontSize: 20,
@@ -286,10 +275,7 @@ export default function Result() {
                   >
                     {streamedMessage}
                   </Text>
-                  <Suggestions
-                    suggestions={suggestions}
-                    isLoading={isLoadingSuggestions}
-                  />
+                  <Suggestions suggestions={suggestions} isLoading={isLoadingSuggestions} />
                 </View>
               </>
             )}
