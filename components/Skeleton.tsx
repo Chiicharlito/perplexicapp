@@ -1,10 +1,8 @@
 import React from "react";
-import { View, Animated, StyleSheet, Dimensions } from "react-native";
-
-const { width } = Dimensions.get("window");
+import { View, Animated, StyleSheet } from "react-native";
 
 const SkeletonLoader = () => {
-  const animatedValue = new Animated.Value(0);
+  const animatedValue = React.useRef(new Animated.Value(0)).current;
 
   React.useEffect(() => {
     Animated.loop(
@@ -19,9 +17,9 @@ const SkeletonLoader = () => {
           duration: 1000,
           useNativeDriver: true,
         }),
-      ])
+      ]),
     ).start();
-  }, []);
+  }, [animatedValue]);
 
   const opacity = animatedValue.interpolate({
     inputRange: [0, 1],
@@ -68,13 +66,11 @@ const styles = StyleSheet.create({
     height: 10,
     backgroundColor: "#E1E9EE",
     borderRadius: 4,
-    // width: width - 32, // Largeur totale moins le padding
   },
   shortLine: {
     height: 10,
     backgroundColor: "#E1E9EE",
     borderRadius: 4,
-    // width: width - 200, // Largeur totale moins le padding
   },
 });
 
