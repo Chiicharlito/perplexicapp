@@ -1,9 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { usePreferences } from "@/hooks/usePreferences";
-import { getData } from "@/services/storage";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

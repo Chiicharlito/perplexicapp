@@ -66,6 +66,7 @@ export default function Result() {
     colors: {
       background: isDark ? "#000000" : "#FFFFFF",
       text: isDark ? "#FFFFFF" : "#1A1A1A",
+      primary: "#008080",
       secondary: isDark ? "#2A2A2A" : "#F5F5F5",
       border: isDark ? "#333333" : "#E5E5E5",
     },
@@ -191,7 +192,7 @@ export default function Result() {
         { backgroundColor: theme.colors.background },
       ]}
     >
-      <Header onClose={() => router.replace("/")} query={query} theme={theme} />
+      <Header onClose={() => router.replace("/")} theme={theme} />
       <ScrollView>
         <Text style={[styles.query, { color: theme.colors.text }]}>
           {query}
